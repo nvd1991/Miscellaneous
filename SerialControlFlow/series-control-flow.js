@@ -2,7 +2,6 @@ const http = require('http');
 
 //Implement series flow control for async calls
 function series(tasks) {
-    let currentTask = 0;
     if (tasks.length < 1) return;
     for (let task of tasks) {
         if (typeof task !== 'function')
@@ -12,9 +11,8 @@ function series(tasks) {
 
     //Run next task
     function callback() {
-        if (currentTask < tasks.length) {
-            tasks[currentTask++](callback);
-        }
+        const task = tasks.shift();
+        if (task) task(callback);
     }
 }
 
