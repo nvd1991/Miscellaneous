@@ -1,3 +1,5 @@
+const http = require('http');
+
 //Implement series flow control for async calls
 function series(tasks) {
     let currentTask = 0;
@@ -18,22 +20,24 @@ function series(tasks) {
 
 //Async functions in an ordered array
 series([
-    function (callback) {
-        setTimeout(function () {
-            console.log('1000 ms');
-            callback();
-        }, 1000);
-    },
-    function (callback) {
-        setTimeout(function () {
-            console.log('2000 ms');
-            callback();
-        }, 1000);
-    },
-    function (callback) {
-        setTimeout(function () {
-            console.log('3000 ms');
-            callback();
-        }, 1000);
-    },
+    getHTML('http://www.english-for-students.com/A-Wise-Counting.html'),
+    getHTML('http://www.english-for-students.com/bye-baby-bunting.html'),
+    getHTML('http://mathforum.org/library/drmath/view/57301.html'),
 ]);
+
+//Html get request
+function getHTML(link) {
+    return function(callback){
+        http.get(link, res => {
+            let data = '';
+            res.on('data', chunk => {
+                data += chunk;
+            });
+            res.on('end', () => {
+                console.log(data.toString());
+                console.log('---------------------------------------------------');
+                callback();
+            });
+        });
+    }
+}
