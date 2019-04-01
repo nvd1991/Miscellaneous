@@ -22,17 +22,6 @@ https.createServer(options, function(req, res) {
     }
 }).listen(9000);
 
-
-function logRequestData(req){
-    let data = '';
-    req.on('data', function(chunk) {
-        data += chunk;
-    })
-    req.on('end', function(err) {
-        console.log(data);
-    })
-}
-
 function sendForm(res){
     res.setHeader('Content-Type', 'text/html');
     res.end("<form action=\"form-process\" method=\"POST\">\n" +
