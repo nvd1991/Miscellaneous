@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Express stock photo application</p>
+<div id="photos">
+    <% for(let photo of photos) { %>
+        <div class="photo">
+            <h4><%= photo.name %></h4>
+            <a href="/photos/<%= photo._id %>/download">
+                <img src="/photos/<%= photo.path %>" alt="<%= photo.name %>">
+            </a>
+        </div>
+    <% }%>
+</div>
+</body>
+</html>
